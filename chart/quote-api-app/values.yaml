@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: shivawmm1810/quote-api-app
-  tag: latest
+  tag: "08997a17cfe88beffc54b11ead41afad8a7c08aa"
   pullPolicy: Always
 
 service:
