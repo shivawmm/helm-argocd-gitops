@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "quote-api-app.fullname" . }}
+  namespace: helm-argocd-demo
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: quote-api-app
+
+  template:
+    metadata:
+      labels:
+        app: quote-api-app
+
+    spec:
+      containers:
+        - name: quote-api-app
+
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+
+          env:
+            - name: ENVIRONMENT
+              value: "{{ .Values.environment }}"
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
