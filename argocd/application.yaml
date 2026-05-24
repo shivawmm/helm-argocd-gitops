@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: quote-api-app
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/shivawmm/helm-argocd-gitops.git
+
+    targetRevision: main
+
+    path: chart/quote-api-app
+
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+
+    namespace: helm-argocd-demo
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
